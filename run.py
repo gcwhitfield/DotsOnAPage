@@ -9,8 +9,9 @@
 import abjad
 import random
 
-MAX_NOTE = 32 
-MIN_NOTE = -8 
+MAX_NOTE = 30 
+MIN_NOTE = -10
+NUM_FILES_TO_GENERATE = 1
 
 # returns a list of random notes
 def randomNotes(duration, numNotes):
@@ -24,10 +25,13 @@ def randomNotes(duration, numNotes):
 
 def main():
     # copied from abjad documentation
-    duration = abjad.Duration(1, 4) #quarater note
-    notes = randomNotes(duration, 100)
-    staff = abjad.Staff(notes)
-    abjad.show(staff)
+    duration = abjad.Duration(1, 1) # whole note
+    for i in range(NUM_FILES_TO_GENERATE):
+        notes = randomNotes(duration, 145)
+        staff = abjad.Staff(notes)
+        lily_file = abjad.LilyPondFile.new(staff)
+        lily_file.header_block.title = abjad.Markup(f'Dots {i}')
+        abjad.show(lily_file)
     return
 
 main()
